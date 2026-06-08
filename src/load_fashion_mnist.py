@@ -1,3 +1,4 @@
+#load_fashion_mnist.py
 import gzip
 import struct
 from pathlib import Path

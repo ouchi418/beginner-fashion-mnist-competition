@@ -1,4 +1,4 @@
-# uv run src/submit.py
+#submit.py
 
 import pickle
 from pathlib import Path

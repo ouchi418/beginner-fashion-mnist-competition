@@ -1,5 +1,3 @@
-# uv run src/train.py
-
 import pickle
 from pathlib import Path
 
@@ -7,12 +5,12 @@ from load_fashion_mnist import load_train_data
 from network import NetworkConfig, SimpleMLP
 
 OUTPUT_PATH = Path("sample_weight.pkl")
-EPOCHS = 5
-HIDDEN_SIZE = 64
-LEARNING_RATE = 0.1
+EPOCHS = 100
+# 【変更】複数の層のサイズをタプルで指定する形に変更しました
+HIDDEN_SIZES = (512, 256, 128, 64, 32)  # 例：1層目128個、2層目64個、3層目32個
+LEARNING_RATE = 0.05
 BATCH_SIZE = 128
 SEED = 42
-
 
 def main() -> int:
     (x_train, t_train), (x_valid, t_valid) = load_train_data()
@@ -20,7 +18,7 @@ def main() -> int:
     model = SimpleMLP(
         NetworkConfig(
             input_size=x_train.shape[1],
-            hidden_size=HIDDEN_SIZE,
+            hidden_sizes=HIDDEN_SIZES,  # 【変更】リスト（タプル）を渡す
             output_size=10,
             learning_rate=LEARNING_RATE,
             batch_size=BATCH_SIZE,
@@ -42,7 +40,6 @@ def main() -> int:
 
     print(f"Saved model: {OUTPUT_PATH.resolve()}")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
